@@ -1,0 +1,144 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+<title>无标题文档</title>
+<style>
+
+html,body{ 
+	margin:0px; 
+	height:100%;
+	min-width: 320px;
+	min-height:320px;
+	}
+
+.bg {
+	width:100%;
+	background-image:url(images/Phone/loginBg.jpg); 
+	background-repeat:no-repeat; 
+	-moz-background-size:100% 100%;  
+    background-size:100% 100%; 
+	TEXT-ALIGN: center;
+	}
+.lg {
+	MARGIN-RIGHT: auto; 
+	MARGIN-LEFT: auto; 
+	vertical-align:middle;
+}
+
+.lgex {
+	width: 600px;/*元素的宽度*/ 
+	height:480px;/*元素的高度*/ 
+	position: absolute;
+    left: 50%;/*配合margin-left的负值实现水平居中*/ 
+	margin-left: -300px;/*值的大小等于元素宽度的一半*/ 
+	top:50%;/*配合margin-top的负值实现垂直居中*/ 
+	margin-top: -240px;/*值的大小等于元素高度的一半*/ 
+
+}
+
+.txt {
+	height: 26px;
+	width: 150px;
+	background:transparent;
+	border:0px;
+}
+
+.logintd {
+	text-align:center;
+	background:url(images/Phone/logintxt.png);
+	background-repeat:no-repeat;
+}
+</style>
+    <script src="js/lib/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/Base64.js"></script>
+    <script type="text/javascript">
+
+function request(paras){ 
+    var url = location.href; 
+    var paraString = url.substring(url.indexOf("?")+1,url.length).split("&"); 
+    var paraObj = {} 
+    for (i=0; j=paraString[i]; i++){ 
+        paraObj[j.substring(0,j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=")+1,j.length); 
+    } 
+    var returnValue = paraObj[paras.toLowerCase()]; 
+    if(typeof(returnValue)=="undefined"){ 
+        return ""; 
+    }else{ 
+        return returnValue; 
+    } 
+} 
+
+        function register(rolecode)
+        {
+            var url = location.href;
+            var param = url.substring(url.indexOf("?")+1,url.length) + "&rolecode=" + rolecode;
+
+            var username = request("name");
+            var password = request("password");
+
+            $.ajax({
+                type:'GET',
+                url:'requestLogin.php',
+                data: param + '&command=reg',
+                async : false,
+                dataType:'text',//服务器返回的数据类型 可选XML ,Json jsonp script html text等
+                success:function(result){
+                        if(result === undefined)
+                        {
+                	    alert(result);
+                        }else{
+                            var objs = eval('(' + result + ')');
+                            if (objs.result == 1){
+                                var paramLogin = "account=" + username + "&password=" + password;
+                                var base64 = new Base64();
+                                var paramLoginEncode = base64.encode(paramLogin);
+                                location.href="game.html?" + paramLoginEncode;
+                            }else {
+                	        alert(result);	
+                            }
+                        }
+                },
+                error:function(){
+                        //ajax提交失败的处理函数！
+                        alert("发送登录信息错误，请刷新后重试！");
+                }
+            });
+        }
+    </script>
+</head>
+
+<body class="bg">
+<div class="lg">
+<div style="margin-top:10px; margin-bottom:10px;">
+<img src="images/Phone/loginfacelogo.png"/>
+</div>
+  <table width="320" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="103" align="center">
+            <input name="button" type="image" src="images/Phone/loginface1.png" onclick="register(0)">
+      </td>
+      <td width="104" align="center">
+            <input name="button" type="image" src="images/Phone/loginface2.png" onclick="register(1)">
+      </td>
+      <td width="113" align="center">
+            <input name="button" type="image" src="images/Phone/loginface3.png" onclick="register(2)">
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+            <input name="button" type="image" src="images/Phone/loginface4.png" onclick="register(3)">
+      </td>
+      <td align="center">
+            <input name="button" type="image" src="images/Phone/loginface5.png" onclick="register(4)">
+      </td>
+      <td align="center">
+            <input name="button" type="image" src="images/Phone/loginface6.png" onclick="register(5)">
+      </td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

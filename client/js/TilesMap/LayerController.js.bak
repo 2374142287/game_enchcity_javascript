@@ -1,0 +1,110 @@
+/**
+ * Created with JetBrains WebStorm.
+ * User: john
+ * Date: 13-2-8
+ * Time: 下午3:21
+ * To change this template use File | Settings | File Templates.
+* 层控制器
+*/
+define(['jquery','../lib/LinkedList'], function($) {
+    var LayerControler = Class.extend({
+        init: function(){
+            this.linkedList = new LinkedList();
+        },
+        getTempZindex : function(item){
+            return item.x+item.y;
+        },
+
+        removerElement:function(item){
+            try{
+                if(item != -1 && this.linkedList.contains(item))
+                {
+                    this.linkedList.remove(item);
+                    trace("removeElement:"+item);
+                }
+                else{
+                    trace("UnContains Element:"+item);
+                }
+            }catch(e){
+                trace(e);
+            }
+        },
+
+        contains:function(item){
+            return this.linkedList.contains(item);
+        },
+
+        addElement:function(item){
+            if(!this.linkedList.contains(item)){
+                var itemz = this.getTempZindex(item);
+                var isInserted = false;
+                var linkLength = this.linkedList.length;
+                for(var i=0;i<linkLength;i++)
+                {
+                    if(this.getTempZindex(this.linkedList.get(i)) > itemz){
+                        this.linkedList.add(i,item);
+                        isInserted = true;
+                        break;
+                    }
+                        if(this.getTempZindex(this.linkedList.get(i))==itemz){
+                            if(i+1<this.linkedList.length){
+                                if(this.getTempZindex(this.linkedList.get(i+1))>itemz){
+                                    isInserted = true;
+                                    this.linkedList.add(i+1,item);
+                                    break;
+                                }
+                            }
+                        }
+                }
+                if(!isInserted) this.linkedList.addLast(item);
+                this.looklinkedList();
+            }
+        },
+        looklinkedList:function(){
+            for(var i=0;i<this.linkedList.length;i++){
+                var zindex = this.linkedList.get(i).x +this.linkedList.get(i).y;
+                trace("id:"+i+"zindex="+zindex+",imgId="+this.linkedList.get(i).id+",x="+this.linkedList.get(i).x +",y="+this.linkedList.get(i).y);
+            }
+        },
+        isBlock:function(px,py){
+            var hasTiles = false;
+            for(var i=0;i<this.linkedList.length;i++){
+                if(this.linkedList.get(i).x == px && this.linkedList.get(i).y == py)
+                {
+                    hasTiles = true;
+                    if(this.linkedList.get(i).isblock) return true;
+                }
+            }
+            if(!hasTiles) return true;
+            return false;
+        },
+        setBlock:function(px,py){
+            for(var i=0;i<this.linkedList.length;i++){
+                if(this.linkedList.get(i).x == px && this.linkedList.get(i).y == py)
+                {
+                    this.linkedList.get(i).isblock = true;
+                }
+            }
+            //trace("setBlock  x:"+px+" y:"+py);
+        },
+
+        getArray:function(){
+            var arr=new Array();         //先声明一维
+            for(var i=0;i<Views.MainView.GameView.MapWorker.map.width;i++){                //一维长度为10
+                arr[i]=new Array();         //在声明二维
+                for(var j=0;j<Views.MainView.GameView.MapWorker.map.height;j++){             //二维长度为20
+                    arr[i][j]=1;
+                }
+            }
+            for(var i=0;i<this.linkedList.length;i++){
+                var s = this.linkedList.get(i).x;
+                var y = this.linkedList.get(i).y;
+                arr[this.linkedList.get(i).x ][ this.linkedList.get(i).y] = this.linkedList.get(i).isblock;
+                //trace("getArray arr["+this.linkedList.get(i).x+","+this.linkedList.get(i).y+"]="+arr[this.linkedList.get(i).x ][ this.linkedList.get(i).y]);
+            }
+            return arr;
+        }
+
+    });
+    return LayerControler;
+});

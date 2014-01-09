@@ -1,0 +1,107 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+<title>无标题文档</title>
+<style>
+
+html,body{ 
+	margin:0px; 
+	height:100%;
+	min-width: 320px;
+	min-height:320px;
+	}
+
+.bg {
+	width:100%;
+	background-image:url(images/Phone/loginBg.jpg); 
+	background-repeat:no-repeat; 
+	-moz-background-size:100% 100%;  
+    background-size:100% 100%; 
+	TEXT-ALIGN: center;
+	}
+.lg {
+	MARGIN-RIGHT: auto; 
+	MARGIN-LEFT: auto; 
+	vertical-align:middle;
+}
+
+.lgex {
+	width: 600px;/*元素的宽度*/ 
+	height:480px;/*元素的高度*/ 
+	position: absolute;
+    left: 50%;/*配合margin-left的负值实现水平居中*/ 
+	margin-left: -300px;/*值的大小等于元素宽度的一半*/ 
+	top:50%;/*配合margin-top的负值实现垂直居中*/ 
+	margin-top: -240px;/*值的大小等于元素高度的一半*/ 
+
+}
+
+.txt {
+	height: 26px;
+	width: 150px;
+	background:transparent;
+	border:0px;
+}
+
+.logintd {
+	text-align:center;
+	background:url(images/Phone/logintxt.png);
+	background-repeat:no-repeat;
+}
+</style>
+    <script src="js/lib/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/Base64.js"></script>
+    <script type="text/javascript">
+        function nextStep()
+        {
+            var userNickname = document.getElementById("txtNickname");
+            var username = document.getElementById("txtUsername");
+            var password = document.getElementById("txtPassword");
+            var passwordConf = document.getElementById("txtPasswordConf");
+
+            if (userNickname === undefined || userNickname.value === null || !userNickname.value) alert("请输入昵称!");
+            else if(username === undefined || username.value === null || !username.value) alert("请输入帐号!");
+            else if(password === undefined || password.value === null || !password.value) alert("请输入密码!");
+            else if(password.value.length < 6) alert("输入的密码长度不应小于6位!");
+            else if(password.value == passwordConf.value) {
+		location.href="role.html?name=" + username.value + "&password=" + password.value + "&nickname=" + userNickname.value;
+            }
+            else  alert("输入的密码不一致!");
+        }
+    </script>
+</head>
+
+<body class="bg">
+<div class="lg">
+<img src="images/Phone/loginlogo.png" width="320"/>
+  <table width="320" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+      <td width="70" align="right"><img src="images/Phone/loginnickname.png" /></td>
+      <td width="162" class="logintd"><input name="txtNickname" type="text" class="txt" id="txtNickname"></td>
+      <td width="88" align="left">&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="right"><img src="images/Phone/loginusername.png" /></td>
+      <td class="logintd"><input name="txtUsername" type="text" class="txt" id="txtUsername"></td>
+      <td align="left">&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="right"><img src="images/Phone/loginpassword.png" /></td>
+      <td class="logintd"><input name="txtPassword" type="password" class="txt" id="txtPassword"></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="right"><img src="images/Phone/loginpassword2.png" /></td>
+      <td class="logintd"><input name="txtPasswordConf" type="password" class="txt" id="txtPasswordConf"></td>
+      <td><a href="index.html"><img src="images/Phone/loginbtnreturn.png" /></a></td>
+    </tr>
+</table>
+<div style="margin-top:10px;">
+    <input name="button" type="image" id="button" value="登陆" src="images/Phone/loginbtnreg.png", onclick="nextStep()">
+</div>
+</div>
+</body>
+</html>

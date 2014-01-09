@@ -1,0 +1,7 @@
+/* CSS Document */
+html,body{margin:0px;height:100%;width:100%;}
+.bg {width:100%;background:#70d7f8;-moz-background-size:100% 100%;background-size:100% 100%;text-align: center;margin:0;padding:0;}
+.lg {margin:0 auto;width:480px; height:800px;background-image:url(../imgs/loginBg.jpg);vertical-align:middle;}
+.txt_div{float:left;margin-top:356px;text-align:center;width:469px;}
+.login_div{float:left;margin-top:108px;text-align:center;width:469px;}
+.txt {height: 50px;width: 300px;border:0px;background:url(../imgs/txtname.png) no-repeat;font:bold 22px "Trebuchet MS", Arial, Helvetica, sans-serif;color:#FFF;text-indent:15px;}
